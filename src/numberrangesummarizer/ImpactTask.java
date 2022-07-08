@@ -16,8 +16,8 @@ https://www.geeksforgeeks.org/initializing-a-list-in-java/
 
 //MY IMPLEMENTATIONS
 public class ImpactTask implements NumberRangeSummarizer {
+
     public Collection<Integer> collect(String input) {
-       System.out.println("Collecting Input...");             
        //Split string input, based on commas and spaces, into a List of type String/.
        List<String> listOfString = new ArrayList<String>(Arrays.asList(input.split("\\s*,\\s*")));
        
@@ -86,33 +86,5 @@ public class ImpactTask implements NumberRangeSummarizer {
    }
    
    public static void main(String[] args) {
-         ImpactTask obj = new ImpactTask();  // Create an object of the ImpactTask class.
-         
-         //call the abstract method of the given interface
-         String test1 = "1,3,6,7,8,12,13,14,15,21,22,23,24,31";
-         String test2 = "1,2,3,6";
-         String test3 = "1,2,3";
-         String test4 = "-1,0,1,3,5,7";
-         String test5 = "0,1,1,2,3,5,7";
-         
-         Collection<Integer> listOfIntegers = obj.collect(test1);
-         String output = obj.summarizeCollection(listOfIntegers);
-         System.out.println(output);
-         
-         listOfIntegers = obj.collect(test2);
-         output = obj.summarizeCollection(listOfIntegers);
-         System.out.println(output);
-         
-         listOfIntegers = obj.collect(test3);
-         output = obj.summarizeCollection(listOfIntegers);
-         System.out.println(output);
-         
-         listOfIntegers = obj.collect(test4);
-         output = obj.summarizeCollection(listOfIntegers);
-         System.out.println(output);
-         
-         listOfIntegers = obj.collect(test5);
-         output = obj.summarizeCollection(listOfIntegers);
-         System.out.println(output);
    }
 }
