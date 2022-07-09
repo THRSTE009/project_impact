@@ -1,35 +1,26 @@
 package numberrangesummarizer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.*;
 import java.util.function.*;
-
-/* 
-https://www.javatpoint.com/java-collection-toarray-method
-https://www.geeksforgeeks.org/stream-in-java/
-https://www.geeksforgeeks.org/program-to-convert-list-of-string-to-list-of-integer-in-java/
-https://www.geeksforgeeks.org/initializing-a-list-in-java/
-*/
 
 //MY IMPLEMENTATIONS
 public class ImpactTask implements NumberRangeSummarizer {
 
     public Collection<Integer> collect(String input) {
-       //Split string input, based on commas and spaces, into a List of type String/.
-       List<String> listOfString = new ArrayList<String>(Arrays.asList(input.split("\\s*,\\s*")));
+       //Split string input, based on commas and spaces, into a List of type String.
+       List<String> stringList = new ArrayList<String>(Arrays.asList(input.split("\\s*,\\s*")));
        
        //Convert String list to Int List
-       List<Integer> listOfIntegers = convertStringListToIntList(
-             listOfString,
+       List<Integer> integersList = convertStringListToIntList(
+               stringList,
              Integer::parseInt);
 
-       return listOfIntegers;
+       Collections.sort(integersList);  // to ensure an ascending order of numbers.
+       return integersList;
     }
 
-    public static <T, U> List<U>
+    public <T, U> List<U>
      convertStringListToIntList(List<T> listOfString,
                                 Function<T, U> function)
      {
@@ -38,22 +29,26 @@ public class ImpactTask implements NumberRangeSummarizer {
              .collect(Collectors.toList());
      }
 
+
    public String summarizeCollection(Collection<Integer> input) {
-      Object[] array = input.toArray();     
-      
-      int current,last = 0;
-      int first = 0;
-      int n = array.length;
+    List<Integer> myList = Arrays.stream(
+            input.stream()
+                    .mapToInt(i->i)
+                    .toArray()
+    ).boxed().collect(Collectors.toList());
+
+      int current, last, first = 0;
+//      int n = myList.length; // commented to save memory.
       boolean cons = false;
       String delimList = "";
       
       //Iterate through input list of numbers. If sequential create a range, else move on to the next number.
-      for (int i = 0; i < n; i++) {       
-         current = (int)array[i];
-         // if array has next item
-         if(i+1 < n) { 
+      for (int i = 0; i < myList.size() ; i++) {
+         current = myList.get(i);
+         // if myList has next item
+         if(i+1 < myList.size() ) {
          // if next number is consecutive
-            if(current+1 == (int)array[i+1]) { 
+            if(current+1 == myList.get(i+1)) {
                if(cons == false) {
                   cons = true;
                   first = current;
@@ -81,7 +76,6 @@ public class ImpactTask implements NumberRangeSummarizer {
             delimList += current;
          }
        }
-      // System.out.println("Testing toString of collection:" + input.toString());                   
       return delimList;
    }
    
