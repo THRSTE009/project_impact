@@ -2,81 +2,66 @@ package numberrangesummarizer;
 
 import java.util.*;
 import java.util.stream.*;
-import java.util.function.*;
 
 //MY IMPLEMENTATIONS
 public class ImpactTask implements NumberRangeSummarizer {
 
     public Collection<Integer> collect(String input) {
-       //Split string input, based on commas and spaces, into a List of type String.
-       List<String> stringList = new ArrayList<String>(Arrays.asList(input.split("\\s*,\\s*")));
-       
-       //Convert String list to Int List
-       List<Integer> integersList = convertStringListToIntList(
-               stringList,
-             Integer::parseInt);
+        //Split string input, based on commas and spaces, into a List of type Integer.
+        List<Integer> integersList = new ArrayList<Integer>(
+                Arrays.asList(input.split("\\s*,\\s*"))
+                        .stream()
+                        .map(s -> Integer.parseInt(s))
+                        .collect(Collectors.toList()));
 
-       Collections.sort(integersList);  // to ensure an ascending order of numbers.
-       return integersList;
+        Collections.sort(integersList);  // to ensure an ascending order of numbers.
+        return integersList;
     }
 
-    public <T, U> List<U>
-     convertStringListToIntList(List<T> listOfString,
-                                Function<T, U> function)
-     {
-         return listOfString.stream()
-             .map(function)
-             .collect(Collectors.toList());
-     }
-
-
    public String summarizeCollection(Collection<Integer> input) {
-    List<Integer> myList = Arrays.stream(
-            input.stream()
-                    .mapToInt(i->i)
-                    .toArray()
-    ).boxed().collect(Collectors.toList());
+       //  converts input to a Stream<Integer> and returns it as a List.
+       List<Integer> myList = input.stream().collect(Collectors.toList());
 
-      int current, last, first = 0;
-//      int n = myList.length; // commented to save memory.
-      boolean cons = false;
-      String delimList = "";
+      int current, first = 0;
+      boolean isConsecutive = false;
+      String delimitedList = "";
       
       //Iterate through input list of numbers. If sequential create a range, else move on to the next number.
-      for (int i = 0; i < myList.size() ; i++) {
+      for (int i = 0; i < myList.size(); i++) {
          current = myList.get(i);
+
          // if myList has next item
-         if(i+1 < myList.size() ) {
+         if(i+1 < myList.size()) {
          // if next number is consecutive
             if(current+1 == myList.get(i+1)) {
-               if(cons == false) {
-                  cons = true;
+               if(isConsecutive == false) {
+                   isConsecutive = true;
                   first = current;
                }           
             }
             //next number is not consecutive but previous number was.     
-            else if (cons == true){    
-               cons = false;
-               last = current;
-               delimList += first + "-" + last + ", ";
+            else if (isConsecutive == true) {
+                isConsecutive = false;
+                delimitedList += first + "-" + current + ", ";   //  "current" becomes "last" number in the range.
             }
             //the current number is not consecutive with previous number or the next number.
             else {
-               delimList += current + ", ";
+                delimitedList += current + ", ";
             }          
          }
+
          //last number in the list is consecutive.
-         else if(cons == true) {
-            cons = false;
-            last = current;
-            delimList += first + "-" + last;
+         else if(isConsecutive == true) {
+             isConsecutive = false;
+             delimitedList += first + "-" + current;
          }
+
          //last number in the list is not consecutive.
          else {
-            delimList += current;
+             delimitedList += current;
          }
        }
-      return delimList;
+      return delimitedList;
    }
    
    public static void main(String[] args) {
