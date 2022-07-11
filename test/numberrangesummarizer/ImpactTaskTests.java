@@ -30,7 +30,7 @@ public class ImpactTaskTests {
         }, "NumberFormatException was expected");
         assertEquals("For input string: \""+input+"\"", thrown.getMessage());
         System.out.println("Test: Empty string expected to fail when collect() tries to parse it to an Integer." +
-                "\nSample Input: \""+input+"\", \nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
     }
 
     @Test
@@ -42,7 +42,7 @@ public class ImpactTaskTests {
         }, "NumberFormatException was expected");
         assertEquals("For input string: \""+input+"\"", thrown.getMessage());
         System.out.println("Test: Non-delimited string includes only letters." +
-                "\nSample Input: \""+input+"\", \nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ImpactTaskTests {
         }, "NumberFormatException was expected");
         assertEquals("For input string: \"b\"", thrown.getMessage());
         System.out.println("Test: Comma delimited string includes letters and numbers." +
-                "\nSample Input: \""+input+"\", \nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n"); // Fails first on 'b'.
+                "\nSample Input: \""+input+"\"\nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n"); // Fails first on 'b'.
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ImpactTaskTests {
         assertEquals("For input string: \"0.0\"", thrown.getMessage());
         System.out.println("Test: Includes decimals in a comma delimited string " +
                 "which contrasts my assumption that only Integer numbers are included in the input string." +
-                "\nSample Input: \""+input+"\", \nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ImpactTaskTests {
         assertEquals("For input string: \""+input+"\"", thrown.getMessage());
         System.out.println("Test: Includes a full stop regex which is not accounted for in the ImpactTask class " +
                 "since it could be used to indicate decimal numbers." +
-                "\nSample Input: \""+input+"\", \nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
     }
 
     @Test
@@ -90,20 +90,20 @@ public class ImpactTaskTests {
 
         Collection<Integer> a = impactTask.collect(input);
         assertEquals(output, a,"Given input has an unexpected result.");
-        System.out.println("Test: Includes regular expression patterns of the following: \"[, ?@!#^&*$]\""+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+        System.out.println("Test: Sample Input includes regular expression patterns of the following: \"[, ?@!#^&*$]\". Result expected as a list of integers."+
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
     void collect_notAllowedInputSeparators_expectCommaSeparator() {
-        String input = "1-3.5";
+        String input = "1-3.5%6";
 
         NumberFormatException thrown = Assertions.assertThrows(NumberFormatException.class, () -> {
             impactTask.collect(input);
         }, "NumberFormatException was expected");
         assertEquals("For input string: \""+input+"\"", thrown.getMessage());
-        System.out.println("Test: Includes regular expression patterns of the following: \"[-.]\""+
-                "\nSample Input: \""+input+"\", \nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
+        System.out.println("Test: Includes regular expression patterns that are not allowed. E.g.: \"[-.%]\""+
+                "\nSample Input: \""+input+"\"\nResult: "+thrown.getClass() +" "+ thrown.getMessage()+"\n");
     }
 
     @Test
@@ -114,7 +114,7 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should not be comma delimited nor should it display a range."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
@@ -125,7 +125,7 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should return the expected result of Werner's sample test."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should return no consecutive and no duplicate numbers."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
@@ -147,7 +147,7 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should return only duplicates not in a range of numbers."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
@@ -158,7 +158,7 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should return duplicates numbers and consecutive in a range of numbers."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
@@ -169,7 +169,7 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should return duplicates numbers and consecutive in a range of numbers."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
@@ -180,7 +180,7 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should return negative consecutive numbers in a range."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 
     @Test
@@ -191,6 +191,6 @@ public class ImpactTaskTests {
         String a  = impactTask.summarizeCollection(impactTask.collect(input));
         assertEquals(output, a,"Given input has an unexpected result.");
         System.out.println("Test: Result should return sorted list of numbers."+
-                "\nSample Input: \""+input+"\", \nResult: "+a+"\n");
+                "\nSample Input: \""+input+"\"\nResult: "+a+"\n");
     }
 }
