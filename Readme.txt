@@ -18,10 +18,11 @@ The review will be based on:
 
 ***************
 My Assumptions:
-- Sample Input is a string of comma delimited list of numbers.
-- The numbers are Integers.
+- Sample input is a single string that includes numbers separated by a comma.
+- The input numbers are only Integers.
 - Input string may contain duplicate numbers.
 - Expected result is an ascending ordered list.
 - No implicit sequential patterns are expected.
 - No explicity sequential patterns using formulas are expected.
 - Numbers will be grouped into a range when they are in an n+1 sequential pattern where n is the first number in the sequence and n+1 is the second. This sequential range continues until broken or the end of the string is reached.
+-Final result is a single string that includes numbers separated by a comma. The numbers are grouped into a range when they are sequential. (Assumption based on the String return type used for NumberRangeSummarizer's summarizeCollection method as well as the sample result given in the interface.)

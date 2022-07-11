@@ -3,30 +3,33 @@ package numberrangesummarizer;
 import java.util.*;
 import java.util.stream.*;
 
+/**
+ * @author Steven Theron
+ */
+
 //MY IMPLEMENTATIONS
 public class ImpactTask implements NumberRangeSummarizer {
 
     public Collection<Integer> collect(String input) {
-        //Split string input, based on commas and spaces, into a List of type Integer.
+        // Split string input, based on commas and spaces, into a List of type Integer.
         List<Integer> integersList = new ArrayList<Integer>(
-                Arrays.asList(input.split("\\s*,\\s*"))
+                Arrays.asList(input.split("[, ?@!#$^&*+/]+"))
                         .stream()
-                        .map(s -> Integer.parseInt(s))
-                        .collect(Collectors.toList()));
+                        .map(s -> Integer.parseInt(s))      // Convert String to Int
+                        .collect(Collectors.toList()));     // Collecting as list.
 
-        Collections.sort(integersList);  // to ensure an ascending order of numbers.
+        Collections.sort(integersList);  // Sorted to ensure an ascending order of numbers.
         return integersList;
     }
 
    public String summarizeCollection(Collection<Integer> input) {
-       //  converts input to a Stream<Integer> and returns it as a List.
-       List<Integer> myList = input.stream().collect(Collectors.toList());
+        List<Integer> myList = input.stream().collect(Collectors.toList());
 
       int current, first = 0;
       boolean isConsecutive = false;
       String delimitedList = "";
       
-      //Iterate through input list of numbers. If sequential create a range, else move on to the next number.
+      // Iterate through input list of numbers. If sequential create a range, else move on to the next number.
       for (int i = 0; i < myList.size(); i++) {
          current = myList.get(i);
 
@@ -39,24 +42,24 @@ public class ImpactTask implements NumberRangeSummarizer {
                   first = current;
                }           
             }
-            //next number is not consecutive but previous number was.     
+            // Next number is not consecutive but previous number was.
             else if (isConsecutive == true) {
                 isConsecutive = false;
                 delimitedList += first + "-" + current + ", ";   //  "current" becomes "last" number in the range.
             }
-            //the current number is not consecutive with previous number or the next number.
+            // The current number is not consecutive with previous number or the next number.
             else {
                 delimitedList += current + ", ";
             }          
          }
 
-         //last number in the list is consecutive.
+         // Last number in the list is consecutive.
          else if(isConsecutive == true) {
              isConsecutive = false;
              delimitedList += first + "-" + current;
          }
 
-         //last number in the list is not consecutive.
+         // Last number in the list is not consecutive.
          else {
              delimitedList += current;
          }
